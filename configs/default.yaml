@@ -1,0 +1,51 @@
+# MoCoDiff Configuration
+
+model:
+  in_channels: 3
+  out_channels: 3
+  model_channels: 128
+  channel_mult: [1, 2, 4, 8]
+  num_res_blocks: 2
+  attention_resolutions: [16, 8]
+  num_frames: 16
+  dropout: 0.1
+  num_heads: 8
+  timesteps: 1000
+  schedule: "cosine"
+  loss_type: "l2"
+
+data:
+  data_root: "data/videos"
+  num_frames: 16
+  frame_size: [256, 256]
+  val_split: 0.1
+  seed: 42
+  frame_ext: "*.png"
+  batch_size: 4
+  num_workers: 4
+
+training:
+  num_steps: 500000
+  lr: 1.0e-4
+  lr_warmup_steps: 5000
+  ema_decay: 0.9999
+  grad_clip: 1.0
+  log_every: 100
+  save_every: 5000
+  sample_every: 2000
+  sample_batch_size: 4
+  seed: 42
+  output_dir: "outputs/mocodiff"
+  resume: null
+
+inference:
+  checkpoint: null
+  sampler: "ddim"
+  ddim_steps: 50
+  ddim_eta: 0.0
+  batch_size: 4
+  num_frames: 16
+  height: 256
+  width: 256
+  output_dir: "outputs/samples"
+  num_samples: 16
